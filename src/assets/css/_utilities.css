@@ -1,0 +1,153 @@
+/**
+ * Custom utilities
+ */
+
+/* Container */
+@utility container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Section spacing */
+@utility section {
+  @apply py-16 md:py-24;
+}
+
+@utility section-sm {
+  @apply py-8 md:py-12;
+}
+
+@utility section-lg {
+  @apply py-24 md:py-32;
+}
+
+/* Text balance for headings */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Text pretty for paragraphs */
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/* Gradient text - cyberpunk neon glow */
+@utility text-gradient {
+  @apply bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-primary-400 to-primary-600;
+}
+
+/* Card component */
+@utility card {
+  @apply bg-white shadow-sm;
+  @apply border border-zinc-200;
+  @apply p-6;
+  @apply dark:bg-dark-800 dark:border-dark-600;
+}
+
+@utility card-hover {
+  @apply transition-all duration-200;
+  @apply hover:shadow-md hover:border-primary-300;
+  @apply dark:hover:shadow-primary-500/10 dark:hover:border-primary-500/50;
+}
+
+/* Badge component */
+@utility badge {
+  @apply inline-flex items-center;
+  @apply px-2.5 py-0.5 text-xs font-medium;
+}
+
+@utility badge--primary {
+  @apply bg-primary-100 text-primary-800;
+  @apply dark:bg-primary-500/20 dark:text-primary-300;
+}
+
+@utility badge--secondary {
+  @apply bg-zinc-100 text-zinc-800;
+  @apply dark:bg-dark-700 dark:text-zinc-300;
+}
+
+@utility badge--success {
+  @apply bg-green-100 text-green-800;
+  @apply dark:bg-green-500/20 dark:text-green-400;
+}
+
+@utility badge--warning {
+  @apply bg-amber-100 text-amber-800;
+  @apply dark:bg-amber-500/20 dark:text-amber-400;
+}
+
+@utility badge--error {
+  @apply bg-red-100 text-red-800;
+  @apply dark:bg-red-500/20 dark:text-red-400;
+}
+
+/* Alert component */
+@utility alert {
+  @apply p-4 border-l-4;
+}
+
+@utility alert--info {
+  @apply bg-blue-50 border-blue-500 text-blue-800;
+  @apply dark:bg-blue-500/10 dark:text-blue-300;
+}
+
+@utility alert--success {
+  @apply bg-green-50 border-green-500 text-green-800;
+  @apply dark:bg-green-500/10 dark:text-green-300;
+}
+
+@utility alert--warning {
+  @apply bg-amber-50 border-amber-500 text-amber-800;
+  @apply dark:bg-amber-500/10 dark:text-amber-300;
+}
+
+@utility alert--error {
+  @apply bg-red-50 border-red-500 text-red-800;
+  @apply dark:bg-red-500/10 dark:text-red-300;
+}
+
+/* Aspect ratios */
+@utility aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+@utility aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+@utility aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Skeleton loading */
+@utility skeleton {
+  @apply animate-pulse bg-zinc-200;
+  @apply dark:bg-dark-700;
+}
+
+/* Divider */
+@utility divider {
+  @apply border-t border-zinc-200 my-8;
+  @apply dark:border-dark-600;
+}
+
+/* Visually hidden (for screen readers) */
+@utility sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Not sr-only (show again) */
+@utility not-sr-only {
+  @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal;
+  clip: auto;
+}
+
+/* Neon glow effect for cyberpunk theme */
+@utility neon-glow {
+  box-shadow: 0 0 20px oklch(0.92 0.19 95 / 0.3), 0 0 40px oklch(0.92 0.19 95 / 0.1);
+}
+
+@utility neon-glow-sm {
+  box-shadow: 0 0 10px oklch(0.92 0.19 95 / 0.2);
+}

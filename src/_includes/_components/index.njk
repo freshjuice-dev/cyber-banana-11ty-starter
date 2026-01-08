@@ -1,0 +1,272 @@
+{#
+  Component Macros
+  Import with: {% from "_components/index.njk" import button, badge, card, projectCard, accordion, alert %}
+#}
+
+{# =====================================================
+   Button Component
+   Props:
+   - text: Button text (required)
+   - url: Link URL (optional, renders as <a> if provided)
+   - variant: primary|secondary|outline|ghost|white|danger (default: primary)
+   - size: xs|sm|md|lg (default: md)
+   - full: boolean - full width
+   - type: button|submit|reset (for button elements)
+   - disabled: boolean
+   - className: additional classes
+   - external: boolean - opens in new tab
+   - icon_left: phosphor icon name (optional)
+   - icon_right: phosphor icon name (optional)
+===================================================== #}
+{% macro button(props) %}
+  {% set variant = props.variant | default("primary") %}
+  {% set size = props.size | default("md") %}
+
+  {% set classes = "btn btn--" + variant + " btn--" + size %}
+  {% if props.full %}{% set classes = classes + " btn--full" %}{% endif %}
+  {% if props.className %}{% set classes = classes + " " + props.className %}{% endif %}
+
+  {% if props.url %}
+    <a
+      href="{{ props.url }}"
+      class="{{ classes }}"
+      {% if props.external %}target="_blank" rel="noopener noreferrer"{% endif %}
+    >
+      {% if props.icon_left %}{% phosphor props.icon_left, "bold", { size: 16 } %}{% endif %}
+      {{ props.text }}
+      {% if props.icon_right %}{% phosphor props.icon_right, "bold", { size: 16 } %}{% endif %}
+    </a>
+  {% else %}
+    <button
+      type="{{ props.type | default('button') }}"
+      class="{{ classes }}"
+      {% if props.disabled %}disabled{% endif %}
+    >
+      {% if props.icon_left %}{% phosphor props.icon_left, "bold", { size: 16 } %}{% endif %}
+      {{ props.text }}
+      {% if props.icon_right %}{% phosphor props.icon_right, "bold", { size: 16 } %}{% endif %}
+    </button>
+  {% endif %}
+{% endmacro %}
+
+
+{# =====================================================
+   Badge Component
+   Props:
+   - text: Badge text (required)
+   - variant: primary|secondary|success|warning|error (default: primary)
+   - url: Link URL (optional)
+   - className: additional classes
+===================================================== #}
+{% macro badge(props) %}
+  {% set variant = props.variant | default("primary") %}
+  {% set classes = "badge badge--" + variant %}
+  {% if props.className %}{% set classes = classes + " " + props.className %}{% endif %}
+
+  {% if props.url %}
+    <a href="{{ props.url }}" class="{{ classes }}">
+      {{ props.text }}
+    </a>
+  {% else %}
+    <span class="{{ classes }}">
+      {{ props.text }}
+    </span>
+  {% endif %}
+{% endmacro %}
+
+
+{# =====================================================
+   Card Component
+   Props:
+   - title: Card title (required)
+   - description: Card description
+   - url: Link URL
+   - image: Image URL
+   - image_alt: Image alt text
+   - date: Date string
+   - tags: Array of tag strings
+   - className: additional classes
+===================================================== #}
+{% macro card(props) %}
+  <article class="group relative flex flex-col bg-white dark:bg-dark-800 shadow-sm border border-zinc-200 dark:border-dark-600 overflow-hidden hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-500/50 transition-all duration-300 {{ props.className | default('') }}">
+    {% if props.image %}
+      <div class="aspect-video overflow-hidden">
+        <img
+          src="{{ props.image }}"
+          alt="{{ props.image_alt | default(props.title) }}"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+          eleventy:widths="400"
+        >
+      </div>
+    {% endif %}
+
+    <div class="flex flex-col flex-1 p-6">
+      {% if props.date %}
+        <div class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+          <time datetime="{{ props.date | dateToISOString }}">{{ props.date | shortDate }}</time>
+        </div>
+      {% endif %}
+
+      <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition-colors">
+        {% if props.url %}
+          <a href="{{ props.url }}" class="no-underline">
+            <span class="absolute inset-0"></span>
+            {{ props.title }}
+          </a>
+        {% else %}
+          {{ props.title }}
+        {% endif %}
+      </h3>
+
+      {% if props.description %}
+        <p class="text-zinc-600 dark:text-zinc-400 line-clamp-3">
+          {{ props.description | truncate(150) }}
+        </p>
+      {% endif %}
+
+      {% if props.url %}
+        <span class="inline-flex items-center gap-1 mt-auto pt-4 text-primary-700 dark:text-primary-400 font-medium group-hover:gap-2 transition-all">
+          Read more
+          {% phosphor "arrow-right", "bold", { size: 16 } %}
+        </span>
+      {% endif %}
+    </div>
+  </article>
+{% endmacro %}
+
+
+{# =====================================================
+   Project Card Component
+   Props:
+   - title: Project title (required)
+   - description: Project description
+   - url: Project URL
+   - image: Image URL
+   - image_alt: Image alt text
+   - tech: Array of technology strings
+   - github: GitHub URL
+   - demo: Live demo URL
+   - className: additional classes
+===================================================== #}
+{% macro projectCard(props) %}
+  <article class="group relative flex flex-col bg-white dark:bg-dark-800 shadow-sm border border-zinc-200 dark:border-dark-600 overflow-hidden hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-500/50 dark:hover:shadow-primary-500/10 transition-all duration-300 {{ props.className | default('') }}">
+    {% if props.image %}
+      <div class="aspect-video overflow-hidden">
+        <img
+          src="{{ props.image }}"
+          alt="{{ props.image_alt | default(props.title) }}"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+          eleventy:widths="400"
+        >
+      </div>
+    {% endif %}
+
+    <div class="flex flex-col flex-1 p-6">
+      {# Tech stack #}
+      {% if props.tech and props.tech.length > 0 %}
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          {% for item in props.tech | slice(0, 4) %}
+            <span class="px-2 py-0.5 text-xs font-medium bg-primary-100 dark:bg-primary-500/20 text-primary-800 dark:text-primary-300">
+              {{ item }}
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition-colors">
+        {% if props.url %}
+          <a href="{{ props.url }}" class="no-underline">
+            <span class="absolute inset-0"></span>
+            {{ props.title }}
+          </a>
+        {% else %}
+          {{ props.title }}
+        {% endif %}
+      </h3>
+
+      {% if props.description %}
+        <p class="text-zinc-600 dark:text-zinc-400 line-clamp-2 text-sm">
+          {{ props.description | truncate(120) }}
+        </p>
+      {% endif %}
+
+      {# Links #}
+      <div class="flex items-center gap-4 mt-auto pt-4">
+        {% if props.github %}
+          <a href="{{ props.github }}" class="relative z-10 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
+            {% phosphor "github-logo", "bold", { size: 18 } %}
+          </a>
+        {% endif %}
+        {% if props.demo %}
+          <a href="{{ props.demo }}" class="relative z-10 text-zinc-500 dark:text-zinc-400 hover:text-primary-700 dark:hover:text-primary-400 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="View live demo">
+            {% phosphor "arrow-square-out", "bold", { size: 18 } %}
+          </a>
+        {% endif %}
+        <span class="inline-flex items-center gap-1 ml-auto text-primary-700 dark:text-primary-400 font-medium text-sm group-hover:gap-2 transition-all">
+          View project
+          {% phosphor "arrow-right", "bold", { size: 14 } %}
+        </span>
+      </div>
+    </div>
+  </article>
+{% endmacro %}
+
+
+{# =====================================================
+   Accordion Component (Vanilla JS)
+   Props:
+   - items: Array of { question, answer } objects
+   - className: additional classes
+===================================================== #}
+{% macro accordion(props) %}
+  <div data-accordion class="space-y-3 {{ props.className | default('') }}">
+    {% for item in props.items %}
+      <div data-accordion-item class="border border-zinc-200 dark:border-dark-600 overflow-hidden">
+        <button
+          type="button"
+          data-accordion-trigger
+          class="w-full flex items-center justify-between px-4 py-3 text-left font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-dark-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-inset"
+          aria-expanded="false"
+        >
+          <span>{{ item.question }}</span>
+          <svg
+            data-accordion-icon
+            class="w-5 h-5 text-zinc-500 dark:text-zinc-400 transition-transform duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div
+          data-accordion-content
+          class="text-zinc-600 dark:text-zinc-400"
+        >
+          <div class="px-4 pb-4">{{ item.answer | safe }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+
+{# =====================================================
+   Alert Component
+   Props:
+   - text: Alert message (required)
+   - variant: info|success|warning|error (default: info)
+   - title: Optional title
+   - className: additional classes
+===================================================== #}
+{% macro alert(props) %}
+  {% set variant = props.variant | default("info") %}
+  <div class="alert alert--{{ variant }} {{ props.className | default('') }}" role="alert">
+    {% if props.title %}
+      <strong class="block font-semibold mb-1">{{ props.title }}</strong>
+    {% endif %}
+    <p>{{ props.text }}</p>
+  </div>
+{% endmacro %}

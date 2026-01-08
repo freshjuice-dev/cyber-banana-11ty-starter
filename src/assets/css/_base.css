@@ -1,0 +1,136 @@
+/**
+ * Base styles and CSS reset
+ */
+
+@layer base {
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better box sizing */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Body defaults */
+  body {
+    @apply bg-white text-zinc-900 antialiased;
+    @apply dark:bg-dark-900 dark:text-zinc-100;
+    @apply font-sans text-base leading-normal;
+    text-rendering: optimizeLegibility;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-wrap: pretty;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-600;
+    @apply dark:outline-primary-400;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    @apply sr-only focus:not-sr-only;
+    @apply fixed top-4 left-4 z-50;
+    @apply bg-primary-600 text-dark-900;
+    @apply dark:bg-primary-500 dark:text-dark-950;
+    @apply px-4 py-2  font-semibold;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary-300 text-primary-950;
+    @apply dark:bg-primary-500/40 dark:text-white;
+  }
+
+  /* Better media defaults */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Remove default button styles */
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  /* Links */
+  a {
+    @apply text-primary-700 transition-colors duration-200;
+    @apply hover:text-primary-800;
+    @apply dark:text-primary-400 dark:hover:text-primary-300;
+  }
+
+  /* Headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold text-zinc-900 leading-tight;
+    @apply dark:text-zinc-50;
+    text-wrap: pretty;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+  }
+
+  /* Horizontal rule */
+  hr {
+    @apply border-t border-zinc-200 my-8;
+    @apply dark:border-dark-600;
+  }
+
+  /* Code */
+  code {
+    @apply font-mono text-sm bg-zinc-100 text-zinc-800 px-1.5 py-0.5 ;
+    @apply dark:bg-dark-700 dark:text-primary-300;
+  }
+
+  pre {
+    @apply font-mono text-sm bg-zinc-900 text-zinc-100 p-4  overflow-x-auto;
+    @apply dark:bg-dark-800 dark:border dark:border-dark-600;
+  }
+
+  pre code {
+    @apply bg-transparent text-inherit p-0;
+  }
+}

@@ -1,0 +1,12 @@
+# Site Metadata
+title: Cyber Banana
+description: A cyberpunk-themed developer portfolio starter with 11ty and Tailwind CSS. Fast, dark, and beautifully designed.
+url: https://cyber-banana.freshjuice.dev
+language: en
+author: FreshJuice
+email: contact@freshjuice.dev
+
+# Social/SEO
+twitter: "@FreshJuiceDev"
+image: /assets/images/og-placeholder.png
+themeColor: "#FFE500"

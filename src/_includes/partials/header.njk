@@ -1,0 +1,72 @@
+{# Site Header with Liquid Glass Navigation #}
+
+<header class="sticky top-0 z-50 p-3 sm:p-4">
+  <nav class="bg-dark-900/60 backdrop-blur-lg backdrop-brightness-125 backdrop-contrast-125 border border-primary-500/30 drop-shadow-lg mx-auto max-w-4xl px-4 sm:px-6 py-3 flex items-center">
+    {# Logo #}
+    <a href="/" class="flex items-center gap-2 text-lg font-bold text-zinc-900 dark:text-zinc-50 no-underline hover:text-primary-600 dark:hover:text-primary-400 flex-1 transition-colors">
+      <img src="/favicon-96x96.png" alt="" width="28" height="28" class="w-7 h-7" eleventy:ignore>
+      <span class="hidden sm:inline">{{ metadata.title | default("Cyber Banana") }}</span>
+      <span class="sr-only">{{ metadata.title | default("Cyber Banana") }}</span>
+    </a>
+
+    {# Desktop Navigation (centered) #}
+    <div class="hidden md:flex items-center gap-6 lg:gap-8">
+      {% for item in header.navigation %}
+        <a
+          href="{{ item.url }}"
+          class="text-sm font-semibold text-zinc-700 dark:text-zinc-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors no-underline{% if page.url == item.url %} text-primary-600 dark:text-primary-400 underline underline-offset-4{% endif %}"
+        >
+          {{ item.label }}
+        </a>
+      {% endfor %}
+    </div>
+
+    {# Right side: Search + Theme toggle + Mobile menu #}
+    <div class="flex items-center justify-end gap-4 sm:gap-5 flex-1">
+      {# Search icon #}
+      {% if header.show_search %}
+      <a href="/search/" class="text-zinc-600 dark:text-zinc-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" aria-label="Search">
+        {% phosphor "magnifying-glass", "bold", { size: 20 } %}
+      </a>
+      {% endif %}
+
+      {# Mobile menu button #}
+      <button
+        type="button"
+        data-mobile-menu-toggle
+        class="md:hidden p-1 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span data-mobile-menu-icon-open>{% phosphor "list", "bold", { size: 24 } %}</span>
+        <span data-mobile-menu-icon-close hidden>{% phosphor "x", "bold", { size: 24 } %}</span>
+      </button>
+    </div>
+  </nav>
+
+  {# Mobile Navigation Dropdown #}
+  <div
+    data-mobile-menu
+    hidden
+    class="md:hidden invisible opacity-0 scale-95 absolute left-3 right-3 top-16 z-50 mt-2 origin-top transition-all duration-200 ease-out bg-dark-900/90 backdrop-blur-lg backdrop-brightness-125 backdrop-contrast-125 border border-primary-500/30 drop-shadow-xl max-w-4xl mx-auto"
+    style="max-height: 0; overflow: hidden;"
+  >
+    <nav class="flex flex-col p-3 gap-1">
+      {% for item in header.navigation %}
+        <a
+          href="{{ item.url }}"
+          class="py-2.5 px-4 font-medium text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-dark-700/50 no-underline transition-colors{% if page.url == item.url %} bg-primary-100/50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400{% endif %}"
+        >
+          {{ item.label }}
+        </a>
+      {% endfor %}
+      <a
+        href="/search/"
+        class="py-2.5 px-4 font-medium text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-dark-700/50 no-underline transition-colors flex items-center gap-3{% if page.url == '/search/' %} bg-primary-100/50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400{% endif %}"
+      >
+        {% phosphor "magnifying-glass", "bold", { size: 18 } %}
+        Search
+      </a>
+    </nav>
+  </div>
+</header>

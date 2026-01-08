@@ -1,0 +1,93 @@
+---
+layout: layouts/base.njk
+---
+{% from "_components/index.njk" import button, badge %}
+
+<article class="section">
+  <div class="container max-w-4xl">
+    {# Back link #}
+    <nav class="mb-8">
+      <a href="/projects/" class="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-primary-700 dark:hover:text-primary-400 transition-colors no-underline">
+        {% phosphor "arrow-left", "bold", { size: 16 } %}
+        <span>Back to Projects</span>
+      </a>
+    </nav>
+
+    {# Project header #}
+    <header class="mb-12">
+      {# Tech stack badges #}
+      {% if tech and tech.length > 0 %}
+        <div class="flex flex-wrap gap-2 mb-4">
+          {% for item in tech %}
+            {{ badge({ text: item, variant: "primary" }) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <h1 class="text-balance">{{ title }}</h1>
+
+      {% if description %}
+        <p class="mt-4 text-xl text-zinc-600 dark:text-zinc-400 text-pretty">
+          {{ description }}
+        </p>
+      {% endif %}
+
+      {# Project links #}
+      {% if github or demo %}
+        <div class="flex flex-wrap gap-4 mt-6">
+          {% if github %}
+            {{ button({
+              text: "View Source",
+              url: github,
+              variant: "outline",
+              size: "sm",
+              external: true,
+              icon_left: "github-logo"
+            }) }}
+          {% endif %}
+          {% if demo %}
+            {{ button({
+              text: "Live Demo",
+              url: demo,
+              variant: "primary",
+              size: "sm",
+              external: true,
+              icon_right: "arrow-square-out"
+            }) }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </header>
+
+    {# Featured image #}
+    {% if image %}
+      <figure class="mb-12 -mx-4 sm:mx-0">
+        <img
+          src="{{ image }}"
+          alt="{{ image_alt | default(title) }}"
+          class="w-full  border border-zinc-200 dark:border-dark-700"
+          loading="eager"
+        >
+        {% if image_caption %}
+          <figcaption class="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-3">
+            {{ image_caption }}
+          </figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+
+    {# Project content #}
+    <div class="prose prose-lg mx-auto">
+      {{ content | safe }}
+    </div>
+
+    {# Date #}
+    {% if date %}
+      <footer class="mt-16 pt-8">
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">
+          Last updated: <time datetime="{{ date | dateToISOString }}">{{ date | readableDate }}</time>
+        </p>
+      </footer>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,48 @@
+{# Site Footer - Cyberpunk Style #}
+
+<footer class="py-16 px-3 sm:px-4">
+  <div class="max-w-4xl mx-auto">
+    {# Terminal style box #}
+    <div class="bg-dark-900 dark:bg-dark-950 border border-primary-500/30 p-6 font-mono text-sm">
+      {# Terminal header #}
+      <div class="flex items-center gap-2 mb-6 pb-4 border-b border-primary-500/20">
+        <span class="w-3 h-3 bg-red-500"></span>
+        <span class="w-3 h-3 bg-yellow-500"></span>
+        <span class="w-3 h-3 bg-green-500"></span>
+        <span class="ml-2 text-zinc-500">~/cyber-banana</span>
+      </div>
+
+      {# Terminal content #}
+      <div class="space-y-3 text-zinc-400">
+        <p><span class="text-primary-400">$</span> whoami</p>
+        <p class="text-zinc-300">Just another dev pushing pixels & breaking prod at 2am</p>
+
+        <p class="pt-2"><span class="text-primary-400">$</span> ls ~/socials/</p>
+        <div class="flex flex-wrap gap-x-6 gap-y-1 py-2">
+          {% if socials %}
+            {% for social in socials %}
+              <a href="{{ social.url }}" class="text-primary-400 hover:text-primary-300 transition-colors" target="_blank" rel="noopener noreferrer">{{ social.platform }}.com</a>
+            {% endfor %}
+          {% endif %}
+          <a href="/feed.xml" class="text-primary-400 hover:text-primary-300 transition-colors">rss.xml</a>
+        </div>
+
+        <p class="pt-2"><span class="text-primary-400">$</span> echo $STATUS</p>
+        <p class="text-green-400">● Online & caffeinated</p>
+
+        <p class="pt-2"><span class="text-primary-400">$</span> ls ~/legal/</p>
+        <div class="flex flex-wrap gap-x-6 gap-y-1 py-2">
+          <a href="{{ footer.privacy_url | default('/privacy/') }}" class="text-primary-400 hover:text-primary-300 transition-colors">privacy.md</a>
+        </div>
+
+        <p class="pt-2"><span class="text-primary-400">$</span> cat LICENSE</p>
+        <p class="text-zinc-500">&copy; {% year %} {{ metadata.title | default("Cyber Banana") }} • Built with coffee & mass hysteria</p>
+      </div>
+
+      {# Blinking cursor #}
+      <p class="mt-6 text-primary-400">
+        $ <span class="animate-pulse">▊</span>
+      </p>
+    </div>
+  </div>
+</footer>

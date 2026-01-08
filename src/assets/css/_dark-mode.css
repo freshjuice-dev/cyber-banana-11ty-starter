@@ -1,0 +1,83 @@
+/**
+ * Dark Mode Styles
+ * Additional dark mode styles and cyberpunk enhancements
+ * Applied when html has .dark class
+ */
+
+html.dark {
+  /* Cyberpunk neon text glow for headings */
+  & h1,
+  & h2 {
+    text-shadow: 0 0 30px oklch(0.92 0.19 95 / 0.2);
+  }
+
+  /* Enhanced link hover glow */
+  & a:not(.btn):not(.nav-link):hover {
+    text-shadow: 0 0 10px oklch(0.92 0.19 95 / 0.3);
+  }
+
+  /* Card hover glow effect */
+  & .card:hover {
+    box-shadow: 0 4px 20px oklch(0.92 0.19 95 / 0.1);
+  }
+
+  /* Button glow on hover */
+  & .btn:hover {
+    box-shadow:
+      0 4px 15px oklch(0.92 0.19 95 / 0.3),
+      0 0 30px oklch(0.92 0.19 95 / 0.15);
+  }
+
+  /* Focus ring glow */
+  & :focus-visible {
+    box-shadow: 0 0 15px oklch(0.92 0.19 95 / 0.2);
+  }
+
+  /* Gradient text glow */
+  & .text-gradient {
+    text-shadow: 0 0 30px oklch(0.92 0.19 95 / 0.3);
+  }
+
+  /* Scrollbar styling for dark mode */
+  & ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  & ::-webkit-scrollbar-track {
+    background: oklch(0.06 0.006 270);
+  }
+
+  & ::-webkit-scrollbar-thumb {
+    background: oklch(0.20 0.02 270);
+    border-radius: 5px;
+  }
+
+  & ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.30 0.02 270);
+  }
+
+  /* Selection with glow */
+  & ::selection {
+    text-shadow: 0 0 10px oklch(0.92 0.19 95 / 0.5);
+  }
+}
+
+/* Reduced motion - disable glows and animations */
+@media (prefers-reduced-motion: reduce) {
+  html.dark {
+    & h1,
+    & h2,
+    & a:hover,
+    & .text-gradient,
+    & ::selection {
+      text-shadow: none;
+    }
+
+    & .card:hover,
+    & .btn:hover,
+    & :focus-visible {
+      box-shadow: none;
+    }
+  }
+}

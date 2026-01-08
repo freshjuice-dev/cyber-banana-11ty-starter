@@ -1,0 +1,13 @@
+# Header Navigation
+navigation:
+  - label: Home
+    url: /
+  - label: Projects
+    url: /projects/
+  - label: Blog
+    url: /blog/
+  - label: About
+    url: /about/
+
+# Show search icon in header
+show_search: true

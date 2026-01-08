@@ -1,0 +1,133 @@
+---
+layout: layouts/base.njk
+title: Projects
+description: A collection of things I've built, contributed to, or tinkered with.
+pagination:
+  data: collections.projects
+  size: 10
+  alias: projects
+permalink: "{% if pagination.pageNumber == 0 %}/projects/{% else %}/projects/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+
+<section class="py-16 md:py-24">
+  <div class="container max-w-4xl">
+    {# Page header #}
+    <header class="mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ title }}</h1>
+      <p class="text-lg text-zinc-400">
+        {{ description }}
+      </p>
+    </header>
+
+    {# Projects grid #}
+    {% if projects.length > 0 %}
+      <div class="grid gap-8">
+        {% for project in projects %}
+          <article class="group relative overflow-hidden border border-dark-700 hover:border-primary-500/50 transition-all duration-300 hover:shadow-[5px_0_0_rgba(255,0,0,0.7),-3px_-5px_0_rgba(0,255,0,0.7),3px_5px_0_rgba(0,0,255,0.7)]">
+            <a href="{{ project.url }}" class="block no-underline">
+              <div class="flex flex-col md:flex-row">
+                {# Image with cyberpunk filter #}
+                {% if project.data.image %}
+                  <div class="relative md:w-72 h-48 md:h-auto overflow-hidden shrink-0">
+                    {# Scanlines overlay #}
+                    <div class="absolute inset-0 z-10 pointer-events-none opacity-20 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.3)_2px,rgba(0,0,0,0.3)_4px)]"></div>
+                    {# Color overlay #}
+                    <div class="absolute inset-0 z-10 bg-primary-500/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-300"></div>
+                    <img
+                      src="{{ project.data.image }}"
+                      alt="{{ project.data.image_alt | default(project.data.title) }}"
+                      class="w-full h-full object-cover grayscale group-hover:grayscale-0 contrast-125 group-hover:contrast-100 transition-all duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    >
+                  </div>
+                {% endif %}
+
+                {# Content #}
+                <div class="flex-1 p-6">
+                  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                    <h2 class="text-xl font-bold text-zinc-100 group-hover:text-primary-400 transition-colors">
+                      {{ project.data.title }}
+                    </h2>
+                    {% if project.data.tech and project.data.tech.length > 0 %}
+                      <div class="flex flex-wrap gap-1.5 shrink-0">
+                        {% for item in project.data.tech | slice(0, 3) %}
+                          <span class="px-2 py-0.5 text-xs font-mono bg-dark-800 text-primary-400 border border-primary-500/30">
+                            {{ item }}
+                          </span>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <p class="text-zinc-400 text-sm mb-4 line-clamp-2">
+                    {{ project.data.description }}
+                  </p>
+
+                  <div class="flex items-center gap-4 text-sm">
+                    {% if project.data.github %}
+                      <span class="text-zinc-500 flex items-center gap-1">
+                        {% phosphor "github-logo", "bold", { size: 14 } %}
+                        <span class="font-mono text-xs">src</span>
+                      </span>
+                    {% endif %}
+                    {% if project.data.demo %}
+                      <span class="text-zinc-500 flex items-center gap-1">
+                        {% phosphor "globe", "bold", { size: 14 } %}
+                        <span class="font-mono text-xs">live</span>
+                      </span>
+                    {% endif %}
+                    <span class="text-primary-400 ml-auto font-mono text-xs">
+                      sh ./view-project
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {# Glitch line effect #}
+            <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {# Pagination #}
+      {% if pagination.pages.length > 1 %}
+        <nav class="mt-12 flex items-center justify-between font-mono text-sm" aria-label="Projects pagination">
+          <div>
+            {% if pagination.href.previous %}
+              <a
+                href="{{ pagination.href.previous }}"
+                class="inline-flex items-center gap-2 text-zinc-400 hover:text-primary-400 transition-colors no-underline"
+              >
+                {% phosphor "arrow-left", "bold", { size: 16 } %}
+                <span>../prev</span>
+              </a>
+            {% endif %}
+          </div>
+
+          <span class="text-zinc-500">
+            [{{ pagination.pageNumber + 1 }}/{{ pagination.pages.length }}]
+          </span>
+
+          <div>
+            {% if pagination.href.next %}
+              <a
+                href="{{ pagination.href.next }}"
+                class="inline-flex items-center gap-2 text-zinc-400 hover:text-primary-400 transition-colors no-underline"
+              >
+                <span>./next</span>
+                {% phosphor "arrow-right", "bold", { size: 16 } %}
+              </a>
+            {% endif %}
+          </div>
+        </nav>
+      {% endif %}
+
+    {% else %}
+      <div class="py-12 text-center border border-dark-700 font-mono">
+        <p class="text-zinc-500">$ ls projects/</p>
+        <p class="text-zinc-400 mt-2">No projects found. Check back soon.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>

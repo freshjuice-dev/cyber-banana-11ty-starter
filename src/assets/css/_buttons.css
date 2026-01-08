@@ -1,0 +1,112 @@
+@layer components {
+  .btn {
+    @apply px-6 py-2.5 text-base bg-primary-500 no-underline;
+    @apply text-dark-900 font-semibold cursor-pointer;
+    @apply inline-flex items-center justify-center gap-3;
+    @apply border-primary-500 border-2 hover:brightness-110;
+    @apply transition-all duration-300 ease-in-out;
+    @apply hover:-translate-y-0.5;
+    @apply whitespace-nowrap !no-underline;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
+    @apply dark:bg-primary-500 dark:text-dark-950 dark:border-primary-500;
+    @apply dark:focus:ring-offset-dark-900;
+    box-shadow:
+      3px 0 0 rgba(255, 0, 0, 0.7),
+      -2px -3px 0 rgba(0, 255, 0, 0.7),
+      2px 3px 0 rgba(0, 0, 255, 0.7);
+  }
+
+  .btn:hover {
+    box-shadow:
+      5px 0 0 rgba(255, 0, 0, 0.85),
+      -3px -5px 0 rgba(0, 255, 0, 0.85),
+      3px 5px 0 rgba(0, 0, 255, 0.85);
+  }
+
+  .pager {
+    @apply inline-flex items-center justify-center;
+    @apply w-10 h-10 text-sm font-medium;
+    @apply transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply dark:focus:ring-offset-dark-900;
+  }
+}
+
+/* Button variants */
+@utility btn--primary {
+  @apply text-dark-900 bg-primary-500 border-primary-500;
+  @apply dark:text-dark-950 dark:bg-primary-500 dark:border-primary-500;
+}
+
+@utility btn--secondary {
+  @apply text-primary-700 bg-zinc-50 border-current;
+  @apply dark:text-primary-400 dark:bg-dark-800 dark:border-primary-500/50;
+}
+
+@utility btn--outline {
+  @apply text-dark-900 bg-transparent border-primary-500 hover:bg-primary-500 hover:text-dark-900;
+  @apply dark:text-primary-400 dark:border-primary-500 dark:hover:bg-primary-500 dark:hover:text-dark-950;
+}
+
+@utility btn--ghost {
+  @apply text-zinc-700 bg-transparent border-transparent shadow-none hover:bg-zinc-100;
+  @apply dark:text-zinc-300 dark:hover:bg-dark-700 dark:hover:text-zinc-100;
+}
+
+@utility btn--white {
+  @apply text-dark-900 bg-white border-white shadow-lg;
+  @apply hover:bg-zinc-50 hover:text-dark-950;
+  @apply focus:ring-white;
+}
+
+@utility btn--danger {
+  @apply bg-red-600 border-red-600 text-white focus:ring-red-500;
+  @apply dark:bg-red-500 dark:border-red-500;
+}
+
+@utility btn--disabled {
+  @apply opacity-50 cursor-not-allowed pointer-events-none;
+}
+
+/* Button sizes */
+@utility btn--xs {
+  @apply px-3 py-1 text-xs gap-1.5;
+}
+
+@utility btn--sm {
+  @apply px-4 py-1.5 text-sm gap-2;
+}
+
+@utility btn--md {
+  @apply px-6 py-2.5 text-base gap-3;
+}
+
+@utility btn--lg {
+  @apply px-8 py-3.5 text-lg gap-3;
+}
+
+@utility btn--full {
+  @apply w-full;
+}
+
+/* Pagination variants */
+@utility pager--link {
+  @apply text-zinc-700 bg-white border border-zinc-300 hover:bg-zinc-50 hover:border-zinc-400;
+  @apply dark:text-zinc-300 dark:bg-dark-800 dark:border-dark-600 dark:hover:bg-dark-700 dark:hover:border-dark-500;
+}
+
+@utility pager--current {
+  @apply text-dark-900 bg-primary-500 border border-primary-500;
+  @apply dark:text-dark-950 dark:bg-primary-500 dark:border-primary-500;
+}
+
+@utility pager--disabled {
+  @apply text-zinc-500 bg-zinc-100 border border-zinc-200 cursor-not-allowed;
+  @apply dark:text-zinc-600 dark:bg-dark-800 dark:border-dark-700;
+}
+
+@utility pager--ellipsis {
+  @apply text-zinc-500 cursor-default;
+  @apply dark:text-zinc-500;
+}

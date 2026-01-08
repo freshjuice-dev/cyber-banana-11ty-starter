@@ -1,0 +1,69 @@
+---
+layout: layouts/base.njk
+title: Blog
+description: Thoughts, tutorials, and notes on web development.
+permalink: /blog/
+---
+
+<section class="py-16 md:py-24">
+  <div class="container max-w-3xl">
+    {# Page header #}
+    <header class="mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">{{ title }}</h1>
+      <p class="text-lg text-zinc-400">
+        {{ description }}
+      </p>
+    </header>
+
+    {# Posts grouped by year #}
+    {% if collections.blog.length > 0 %}
+      {% set postsByYear = collections.blog | groupByYear %}
+
+      {% for yearGroup in postsByYear %}
+        {% set year = yearGroup[0] %}
+        {% set posts = yearGroup[1] %}
+        <div class="mb-12">
+          {# Year header #}
+          <h2 class="text-primary-500 font-mono text-lg mb-6 pb-2 border-b border-primary-500/30">
+            {{ year }}
+          </h2>
+
+          {# Posts for this year #}
+          <div class="space-y-4">
+            {% for post in posts %}
+              <article class="group">
+                <a href="{{ post.url }}" class="flex gap-4 no-underline py-2 hover:bg-dark-800/50 -mx-3 px-3 transition-colors">
+                  {# Date #}
+                  <time
+                    datetime="{{ post.date | dateToISOString }}"
+                    class="text-zinc-500 font-mono text-sm shrink-0 w-14"
+                  >
+                    {{ post.date | formatDate("MM/dd") }}
+                  </time>
+
+                  {# Title and description #}
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-zinc-100 group-hover:text-primary-400 transition-colors font-medium truncate">
+                      {{ post.data.title }}
+                    </h3>
+                    {% if post.data.description %}
+                      <p class="text-zinc-500 text-sm mt-1 line-clamp-1">
+                        {{ post.data.description }}
+                      </p>
+                    {% endif %}
+                  </div>
+                </a>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+
+    {% else %}
+      <div class="py-12 text-center border border-dark-700 font-mono">
+        <p class="text-zinc-500">$ ls blog/</p>
+        <p class="text-zinc-400 mt-2">No posts found. Check back soon.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>

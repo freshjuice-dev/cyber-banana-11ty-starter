@@ -1,0 +1,159 @@
+---
+layout: layouts/base.njk
+title: Home
+description: A cyberpunk-themed 11ty starter for developers. Showcase your projects and share your coding journey.
+permalink: /index.html
+---
+{% from "_components/index.njk" import button, badge %}
+
+{# Hero / Intro Section #}
+<section class="py-16 md:py-24">
+  <div class="container max-w-3xl">
+    <div class="space-y-6">
+      <p class="text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
+        Hey there, I'm
+      </p>
+
+      <h1 class="text-4xl md:text-6xl font-bold">
+        <span class="text-primary-500">Cyber Banana</span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-zinc-700 dark:text-zinc-300 leading-relaxed">
+        A husband, father, and passionate coder. I build things for the web and occasionally write about it.
+      </p>
+
+      <p class="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        Currently focused on static sites, JavaScript, and making the web a little bit better.
+        When I'm not coding, you'll find me exploring new tech, drinking too much coffee,
+        and trying to explain to my family what I actually do for a living.
+      </p>
+
+      <div class="flex flex-wrap gap-4 pt-4">
+        {{ button({
+          text: "Read my blog",
+          url: "/blog/",
+          variant: "primary"
+        }) }}
+        {{ button({
+          text: "View projects",
+          url: "/projects/",
+          variant: "outline"
+        }) }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Skills Section #}
+<section class="py-16">
+  <div class="container max-w-3xl">
+    <h2 class="text-2xl font-bold mb-8">Tech Stack</h2>
+
+    {# Skills grid with Phosphor icons #}
+    {% set skills = [
+      { name: "JavaScript", icon: "file-js" },
+      { name: "TypeScript", icon: "file-ts" },
+      { name: "HTML", icon: "file-html" },
+      { name: "CSS", icon: "file-css" },
+      { name: "React", icon: "atom" },
+      { name: "Node.js", icon: "hexagon" },
+      { name: "Git", icon: "git-branch" },
+      { name: "GitHub", icon: "github-logo" },
+      { name: "Terminal", icon: "terminal-window" },
+      { name: "Database", icon: "database" },
+      { name: "API", icon: "plugs-connected" },
+      { name: "Cloud", icon: "cloud" },
+      { name: "Linux", icon: "linux-logo" },
+      { name: "Docker", icon: "cube" },
+      { name: "Figma", icon: "figma-logo" }
+    ] %}
+
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-4">
+      {% for skill in skills %}
+        <div class="group flex flex-col items-center gap-2 p-4 border border-dark-700 hover:border-primary-500/50 transition-all duration-300 hover:shadow-[3px_0_0_rgba(255,0,0,0.7),-2px_-3px_0_rgba(0,255,0,0.7),2px_3px_0_rgba(0,0,255,0.7)]">
+          <span class="text-zinc-500 group-hover:text-primary-400 transition-colors">
+            {% phosphor skill.icon, "duotone", { size: 40 } %}
+          </span>
+          <span class="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors text-center">{{ skill.name }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# Featured Projects Section #}
+<section class="py-16">
+  <div class="container max-w-3xl">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold">Projects</h2>
+      <a href="/projects/" class="text-primary-400 hover:text-primary-300 font-mono text-sm no-underline">
+        ls ./projects
+      </a>
+    </div>
+
+    <div class="grid gap-6">
+      {% for project in collections.projects | selectattr("data.featured") | limit(3) %}
+        <article class="group relative overflow-hidden border border-dark-700 hover:border-primary-500/50 transition-all duration-300 hover:shadow-[5px_0_0_rgba(255,0,0,0.7),-3px_-5px_0_rgba(0,255,0,0.7),3px_5px_0_rgba(0,0,255,0.7)]">
+          <a href="{{ project.url }}" class="block no-underline">
+            <div class="flex flex-col sm:flex-row">
+              {# Image with cyberpunk filter #}
+              {% if project.data.image %}
+                <div class="relative sm:w-48 h-40 sm:h-auto overflow-hidden shrink-0">
+                  {# Scanlines overlay #}
+                  <div class="absolute inset-0 z-10 pointer-events-none opacity-20 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.3)_2px,rgba(0,0,0,0.3)_4px)]"></div>
+                  {# Color overlay #}
+                  <div class="absolute inset-0 z-10 bg-primary-500/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-300"></div>
+                  <img
+                    src="{{ project.data.image }}"
+                    alt="{{ project.data.image_alt | default(project.data.title) }}"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 contrast-125 group-hover:contrast-100 transition-all duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  >
+                </div>
+              {% endif %}
+
+              {# Content #}
+              <div class="flex-1 p-5">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                  <h3 class="text-lg font-bold text-zinc-100 group-hover:text-primary-400 transition-colors">
+                    {{ project.data.title }}
+                  </h3>
+                  {% if project.data.tech and project.data.tech.length > 0 %}
+                    <div class="flex flex-wrap gap-1.5 shrink-0">
+                      {% for item in project.data.tech | slice(0, 2) %}
+                        <span class="px-2 py-0.5 text-xs font-mono bg-dark-800 text-primary-400 border border-primary-500/30">
+                          {{ item }}
+                        </span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <p class="text-zinc-400 text-sm line-clamp-2">
+                  {{ project.data.description | truncate(120) }}
+                </p>
+                <div class="flex items-center gap-4 mt-3 text-sm">
+                  {% if project.data.github %}
+                    <span class="text-zinc-500 flex items-center gap-1 font-mono text-xs">
+                      {% phosphor "github-logo", "bold", { size: 14 } %}
+                      src
+                    </span>
+                  {% endif %}
+                  {% if project.data.demo %}
+                    <span class="text-zinc-500 flex items-center gap-1 font-mono text-xs">
+                      {% phosphor "globe", "bold", { size: 14 } %}
+                      live
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+
+          {# Glitch line effect #}
+          <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+

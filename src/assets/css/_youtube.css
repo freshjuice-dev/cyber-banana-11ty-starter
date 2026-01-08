@@ -1,0 +1,135 @@
+/**
+ * lite-youtube-embed styles
+ * Privacy-friendly YouTube embeds - Cyberpunk themed
+ */
+
+@layer components {
+  lite-youtube {
+    background-color: #000;
+    position: relative;
+    display: block;
+    contain: content;
+    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
+    border: 2px solid theme(colors.primary.500);
+    box-shadow:
+      3px 0 0 rgba(255, 0, 0, 0.7),
+      -2px -3px 0 rgba(0, 255, 0, 0.7),
+      2px 3px 0 rgba(0, 0, 255, 0.7);
+    transition: all 0.3s ease;
+  }
+
+  lite-youtube:hover {
+    box-shadow:
+      5px 0 0 rgba(255, 0, 0, 0.85),
+      -3px -5px 0 rgba(0, 255, 0, 0.85),
+      3px 5px 0 rgba(0, 0, 255, 0.85);
+  }
+
+  /* Gradient overlay */
+  lite-youtube::before {
+    content: attr(data-title);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  lite-youtube:hover::before {
+    opacity: 1;
+  }
+
+  /* Responsive 16:9 aspect ratio */
+  lite-youtube::after {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (16 / 9));
+  }
+
+  /* Iframe when loaded */
+  lite-youtube > iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+  }
+
+  /* Play button - Cyberpunk style */
+  lite-youtube > .lty-playbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 56px;
+    position: absolute;
+    cursor: pointer;
+    transform: translate3d(-50%, -50%, 0);
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    background-color: theme(colors.primary.500);
+    border: 2px solid theme(colors.primary.400);
+    transition: all 0.3s ease;
+    box-shadow:
+      3px 0 0 rgba(255, 0, 0, 0.7),
+      -2px -3px 0 rgba(0, 255, 0, 0.7),
+      2px 3px 0 rgba(0, 0, 255, 0.7);
+  }
+
+  lite-youtube > .lty-playbtn::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent #0a0a0f;
+    margin-left: 4px;
+  }
+
+  lite-youtube:hover > .lty-playbtn,
+  lite-youtube .lty-playbtn:focus {
+    background-color: theme(colors.primary.400);
+    transform: translate3d(-50%, -50%, 0) scale(1.1);
+    box-shadow:
+      5px 0 0 rgba(255, 0, 0, 0.85),
+      -3px -5px 0 rgba(0, 255, 0, 0.85),
+      3px 5px 0 rgba(0, 0, 255, 0.85);
+  }
+
+  /* Post-click styles */
+  lite-youtube.lyt-activated {
+    cursor: unset;
+  }
+
+  lite-youtube.lyt-activated::before,
+  lite-youtube.lyt-activated > .lty-playbtn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Visually hidden for screen readers */
+  .lyt-visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}

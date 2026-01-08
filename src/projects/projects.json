@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/project.njk",
+  "tags": ["project"],
+  "eleventyComputed": {
+    "permalink": "/projects/{{ slug or page.fileSlug }}/"
+  }
+}
