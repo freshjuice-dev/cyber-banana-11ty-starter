@@ -41,7 +41,7 @@ export default function () {
     environment: process.env.ELEVENTY_ENV || "development",
     isProduction,
     url: isProduction
-      ? "https://cyber-banana.freshjuice.dev"
+      ? "https://cyber-banana-starter.freshjuice.dev"
       : "http://localhost:8080",
     hash: {
       short: hash.slice(0, 7),
