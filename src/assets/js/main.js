@@ -23,7 +23,7 @@ function initRangeInputs() {
     input.style.background = `linear-gradient(to right, var(--color-primary-500) ${percent}%, var(--color-zinc-200) ${percent}%)`;
   };
 
-  document.querySelectorAll('input[type="range"]').forEach((input) => {
+  document.querySelectorAll("input[type=\"range\"]").forEach((input) => {
     updateProgress(input);
     input.addEventListener("input", () => updateProgress(input));
   });
